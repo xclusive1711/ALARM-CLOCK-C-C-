@@ -1,0 +1,146 @@
+#include <iostream>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <windows.h>
+#include <conio.h>
+
+int secs, mins, hours;
+using namespace std;
+void printconsole(){
+  printf("\n");
+  printf("(1) START (2) STOP (3) RESET (4) END\n\n");
+  printf("**************STOPWATCH**************\n\n");
+  printf("   HOURS: %d    MINS: %d    SECS: %d\n\n", hours, mins, secs);
+  printf("********CREATED BY XCLUSIVE**********\n\n");
+  printf("KINDLY ENTER NUMBER TWICE IF NOT RESPONDING :(\n");
+}
+
+void count(){
+  system("CLS");
+  while(!kbhit()){
+    printconsole();
+    secs++;
+    Sleep(830);
+    Beep(900, 30);
+    if (secs == 60){
+      mins++;
+      secs = 0;
+      if (mins == 60){
+        hours++;
+        hours = 0;
+        if (hours == 24){
+          hours = 0;
+        }
+      }
+    }
+    system("CLS");
+  }
+}
+
+void timer(){
+ string note;
+ int j = 0;
+
+  while (j == 0){
+    j++;
+    system("CLS");
+    secs = 0;
+    mins = 0;
+    hours = 0;
+    cout << "ENTER REMINDER NOTES: ";
+    getline(cin, note);
+    system("CLS");
+    printf("SET TIMER\n");
+    printf("hours: ");
+    scanf("%d", &hours);
+    printf("mins: ");
+    scanf("%d", &mins);
+    printf("secs: ");
+    scanf("%d", &secs);
+    system("CLS");
+    if (hours > 24 || mins >  59 || secs > 59){
+      printf("you entered wrong input\n");
+      sleep(1);
+      continue;
+    }
+    while (secs >= 0  & mins >= 0 & hours >= 0){
+      printf("\n\n");
+      printf("************TIMER**************\n\n");
+      printf("hours: %d    mins: %d    secs: %d\n\n", hours, mins, secs);
+      printf("******DESIGNED BY XCLUSIVE*****\n");
+      //--secs;
+      Sleep(830);
+      system("CLS");
+      if (secs == 0 & mins > 0){
+        secs = 59;
+        mins--;
+      }
+      Beep(900, 30);
+      secs--;
+      if (mins == 0 & hours > 0){
+        mins = 59;
+        hours--;
+      }
+      int i = 0;
+      while (hours == 0 & mins == 0 & secs == 0 & i < 20){
+          Sleep(100);
+          printf("\n");
+          cout << "REMINDER!!!: "<< note <<"" << endl;
+          printf("\n");
+          printf("************TIMER**************\n\n");
+          printf("hours: %d    mins: %d    secs: %d\n\n", hours, mins, secs);
+          printf("******DESIGNED BY XCLUSIVE*****\n");
+          //Beep(900, 30);
+          printf("\a");
+          system("CLS");
+          i++;
+      }
+    }
+  }
+}
+
+void reset(){
+  secs = 0;
+  mins = 0;
+  hours = 0;
+  printconsole();
+}
+
+int main()
+{
+  int set = 0;
+  while(1){
+  printf("(1) STOPWATCH\n(2) TIMER\n");
+  while (getch() == 49){
+    //set == 1;
+    system("CLS");
+    printconsole();
+      if (getch() == 49){
+        count();
+      }
+      switch (getch()){
+        case 50:
+          printconsole();
+          if (getch() == 51){
+            system("CLS");
+            reset();
+          }
+          break;
+        case 51:
+          reset();
+          break;
+        default :
+          system("CLS");
+          break;
+
+    }
+    }
+    if (getch() == 50){
+      timer();
+    }
+    //break;
+    }
+
+  return (0);
+}
